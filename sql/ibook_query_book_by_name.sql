@@ -1,0 +1,10 @@
+SELECT
+    ZASSETID,
+    ZTITLE AS Title,
+    ZAUTHOR AS Author,
+    ZCOVERURL as CoverURL,
+    ZGENRE as Genre
+FROM
+    ZBKLIBRARYASSET
+WHERE
+    ZTITLE LIKE '%$kw_title%'
