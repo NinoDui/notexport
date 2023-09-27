@@ -3,7 +3,9 @@ import getpass
 
 class CONST_COMM(object):
     __slots__ = ()
+
     TIME_FORMAT = "%Y%m%d-%H%M%S"
+    DATA_FOLDER = "data"
 
 
 class CONST_IBOOK(object):

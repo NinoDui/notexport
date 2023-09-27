@@ -11,7 +11,7 @@ def generate_file_path(ctx, param, value):
     if str(value).endswith(".csv"):
         return value
 
-    folder = "data"
+    folder = CONST_COMM.DATA_FOLDER
     if value:
         folder = value if os.path.isdir(value) else os.path.dirname(value)
     try:
