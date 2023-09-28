@@ -1,0 +1,1 @@
+CREATE TABLE META (key text, value text)

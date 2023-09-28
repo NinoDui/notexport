@@ -1,0 +1,1 @@
+CREATE INDEX key_index ON MDX_DICT (key)

@@ -1,6 +1,7 @@
 import unittest
 
-from notexport import fetch_notes, load_query
+from notexport import fetch_notes
+from notexport.common import load_query
 
 
 class RunnerTest(unittest.TestCase):

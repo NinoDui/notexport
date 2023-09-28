@@ -4,14 +4,7 @@ from string import Template
 
 import pandas as pd
 
-from .common import CONST_IBOOK, SQLiteAdapter
-
-
-def load_query(query_path, **kwargs):
-    with open(query_path, "r") as fp:
-        raw = fp.read()
-        query = Template(raw).substitute(kwargs)
-        return query
+from .common import CONST_IBOOK, SQLiteAdapter, load_query
 
 
 def find_abs_db_path(folder) -> str:

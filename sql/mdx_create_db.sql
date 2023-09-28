@@ -1,0 +1,1 @@
+CREATE TABLE MDX_DICT (key text not null, value text)

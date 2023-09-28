@@ -1,1 +1,1 @@
-from .runner import fetch_notes, load_query
+from .runner import fetch_notes
