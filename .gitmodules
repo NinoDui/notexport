@@ -1,3 +1,0 @@
-[submodule "notexport/ext/mdict-analysis"]
-	path = notexport/ext/mdict-analysis
-	url = git@github.com:csarron/mdict-analysis.git
