@@ -3,7 +3,7 @@ from time import localtime, strftime, time
 
 import click
 
-from notexport import fetch_notes
+from notexport import fetch_notes, fetch_vocabulary
 from notexport.common import CONST_COMM
 
 
@@ -37,8 +37,8 @@ def generate_file_path(ctx, param, value):
     "--before", default=None, help="[FILTER] timestamp before which should be kept"
 )
 def _main(title, output, after, before):
-    result = fetch_notes(kw_title=title)
-    result.to_csv(output)
+    target_notes = fetch_notes(kw_title=title, before=before, after=after)
+    target_notes.to_csv(output)
 
 
 if __name__ == "__main__":

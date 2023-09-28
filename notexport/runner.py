@@ -1,10 +1,11 @@
 import os
+from datetime import datetime
 from glob import glob
-from string import Template
+from typing import List, Tuple
 
 import pandas as pd
 
-from .common import CONST_IBOOK, SQLiteAdapter, load_query
+from .common import CONST_COMM, CONST_IBOOK, CONST_VACABULARY, SQLiteAdapter, load_query
 
 
 def find_abs_db_path(folder) -> str:
@@ -12,6 +13,26 @@ def find_abs_db_path(folder) -> str:
     if not elems or len(elems) < 1:
         raise ValueError(f"Failed to find any sqlite file under {folder}")
     return sorted(elems)[-1]
+
+
+def calculate_time_range_epoch(start_time, end_time) -> Tuple:
+    # TODO: Fix timezone
+    if not start_time:
+        start_time = CONST_COMM.DEFAULT_START_TIME
+    start_time = datetime.strptime(start_time, CONST_COMM.TIME_FORMAT).replace(
+        tzinfo=CONST_COMM.DEFAULT_TIME_ZONE
+    )
+
+    if not end_time:
+        end_time = datetime.now()
+    if isinstance(end_time, str):
+        end_time = datetime.strptime(end_time, CONST_COMM.TIME_FORMAT)
+    end_time = end_time.replace(tzinfo=CONST_COMM.DEFAULT_TIME_ZONE)
+
+    return (
+        start_time.timestamp() - CONST_COMM.COCOA_UNIX_DELTA_SEC,
+        end_time.timestamp() - CONST_COMM.COCOA_UNIX_DELTA_SEC,
+    )
 
 
 def fetch_notes(**kwargs) -> pd.DataFrame:
@@ -35,6 +56,9 @@ def fetch_notes(**kwargs) -> pd.DataFrame:
         )
 
         kwargs["asset_ids"] = ",".join(book_ids)
+        kwargs["start_time"], kwargs["end_time"] = calculate_time_range_epoch(
+            kwargs.get("after", None), kwargs.get("before", None)
+        )
         tb_annotation: pd.DataFrame = anno_db.query(
             load_query(annotation_sql_path, **kwargs)
         )
@@ -51,3 +75,21 @@ def fetch_notes(**kwargs) -> pd.DataFrame:
             right_index=False,
         )
         return all_notes
+
+
+def fetch_vocabulary(keys: List, vocabulary_name: str) -> pd.DataFrame:
+    vocabulary_db_path = None
+    if vocabulary_name.upper() == CONST_VACABULARY.COLLINS.name:
+        vocabulary_db_path = CONST_VACABULARY.COLLINS
+    elif vocabulary_name.upper() == CONST_VACABULARY.MERRIAM_WEBSTER.name:
+        vocabulary_db_path = CONST_VACABULARY.MERRIAM_WEBSTER
+    else:
+        raise NotImplementedError(
+            f"Vocabulary {vocabulary_name} is not supported, select from ['collins', 'merriam_webster]"
+        )
+
+    with SQLiteAdapter(vocabulary_db_path) as voc_conn:
+        result: pd.DataFrame = voc_conn.query(
+            load_query("sql/mdx_query_by_key.sql", target_words=",".join(keys))
+        )
+        return result

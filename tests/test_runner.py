@@ -1,6 +1,6 @@
 import unittest
 
-from notexport import fetch_notes
+from notexport import calculate_time_range_epoch, fetch_notes
 from notexport.common import load_query
 
 
@@ -14,6 +14,11 @@ class RunnerTest(unittest.TestCase):
         kwargs = {"kw_title": "Growth Mindset"}
         result = fetch_notes(**kwargs)
         self.assertGreater(result.shape[0], 1)
+
+    def test_calculate_time_range_epoch(self):
+        s, e = calculate_time_range_epoch("20010101-000000", "20230926-000000")
+        print(s, e, sep="\n")
+        self.assertLess(e, 717609520)
 
 
 if __name__ == "__main__":

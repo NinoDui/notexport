@@ -1,4 +1,7 @@
 import getpass
+from datetime import datetime
+from enum import StrEnum
+from zoneinfo import ZoneInfo
 
 
 class CONST_COMM(object):
@@ -6,6 +9,9 @@ class CONST_COMM(object):
 
     TIME_FORMAT = "%Y%m%d-%H%M%S"
     DATA_FOLDER = "data"
+    DEFAULT_START_TIME = "19700101-000000"
+    COCOA_UNIX_DELTA_SEC = (datetime(2001, 1, 1) - datetime(1970, 1, 1)).total_seconds()
+    DEFAULT_TIME_ZONE = ZoneInfo("Asia/Shanghai")
 
 
 class CONST_IBOOK(object):
@@ -16,3 +22,11 @@ class CONST_IBOOK(object):
     DEFAULT_ANNOTATION = "AEAnnotation"
     BOOK_ID_COL_IN_BKLIBRARY = "ZASSETID"
     BOOK_ID_COL_IN_ANNOTATION = "ZANNOTATIONASSETID"
+
+
+class CONST_VACABULARY(StrEnum):
+    COLLINS = "resources/柯林斯COBUILD高阶英汉双解学习词典 1.7.sqlite.db"
+    MERRIAM_WEBSTER = (
+        "resources/Merriam-Webster's Collegiate Dictionary 11th Edtion.sqlite.db"
+    )
+    OTHERS = "NOT IMPLEMENTED"
