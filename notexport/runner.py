@@ -4,8 +4,7 @@ from string import Template
 
 import pandas as pd
 
-from .common import CONST_IBOOK
-from .ibook import SQLiteAdapter
+from .common import CONST_IBOOK, SQLiteAdapter
 
 
 def load_query(query_path, **kwargs):

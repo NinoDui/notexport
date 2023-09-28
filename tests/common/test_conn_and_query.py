@@ -5,8 +5,7 @@ from string import Template
 
 import pandas as pd
 
-from notexport.common import CONST_IBOOK
-from notexport.ibook import SQLiteAdapter
+from notexport.common import CONST_IBOOK, SQLiteAdapter
 
 
 class TestConnection(unittest.TestCase):
