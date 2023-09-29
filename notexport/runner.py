@@ -1,11 +1,12 @@
 import os
 from datetime import datetime
 from glob import glob
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 import pandas as pd
 
 from .common import CONST_COMM, CONST_IBOOK, CONST_VACABULARY, SQLiteAdapter, load_query
+from .ibook import IBookNoteProcessor
 
 
 def find_abs_db_path(folder) -> str:
@@ -89,7 +90,23 @@ def fetch_vocabulary(keys: List, vocabulary_name: str) -> pd.DataFrame:
         )
 
     with SQLiteAdapter(vocabulary_db_path) as voc_conn:
-        result: pd.DataFrame = voc_conn.query(
-            load_query("sql/mdx_query_by_key.sql", target_words=",".join(keys))
-        )
-        return result
+        sql = load_query("sql/mdx_query_by_key.sql", target_words="','".join(keys))
+        return voc_conn.query(sql)
+
+
+def attach_word_explaination(src: Union[str, pd.DataFrame], voc_name):
+    """
+    Merge the vocabulary explanitions for highlighted notes
+
+    Args:
+        src (str, pd.DataFrame): notes dumped from ibook
+        voc_name (str): vocabulary file name
+        target_folder: saving path
+    """
+    ibook_processor = IBookNoteProcessor(data=src)
+
+    words = ibook_processor.lemmatize().get_words(cleaned=True)
+    vocabulary = fetch_vocabulary(words, voc_name)
+    ibook_processor.merge_explanation_from_vocabulary(vocabulary)
+
+    return ibook_processor.get_data()

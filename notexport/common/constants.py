@@ -22,6 +22,8 @@ class CONST_IBOOK(object):
     DEFAULT_ANNOTATION = "AEAnnotation"
     BOOK_ID_COL_IN_BKLIBRARY = "ZASSETID"
     BOOK_ID_COL_IN_ANNOTATION = "ZANNOTATIONASSETID"
+    NOTE_COL = "HighlightedText"
+    NOTE_COMPLETE_COL = "BroaderText"
 
 
 class CONST_VACABULARY(StrEnum):
