@@ -5,6 +5,7 @@ import click
 import pandas as pd
 
 from notexport import attach_word_explaination, fetch_notes
+from notexport.anki import pack
 from notexport.common import CONST_COMM
 
 
@@ -43,7 +44,8 @@ def generate_target_folder(ctx, param, value):
     help="[TASK] whether to join word explainations from vocabulary",
 )
 @click.option("--vocabulary", default="collins")
-def _main(title, output, after, before, join_vocabulary, vocabulary):
+@click.option("--gen_anki", default=False)
+def _main(title, output, after, before, join_vocabulary, vocabulary, gen_anki):
     target_notes: pd.DataFrame = fetch_notes(kw_title=title, before=before, after=after)
     target_notes.to_csv(os.path.join(output, "notes.csv"))
 
@@ -55,6 +57,9 @@ def _main(title, output, after, before, join_vocabulary, vocabulary):
         print(
             f"Dumped {df_w.shape[0]} words and {df_s.shape[0]} sentences under folder {output}"
         )
+
+    if gen_anki:
+        pack(df_w, output_folder=output)
 
 
 if __name__ == "__main__":
