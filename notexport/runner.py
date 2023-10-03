@@ -105,7 +105,7 @@ def attach_word_explaination(src: Union[str, pd.DataFrame], voc_name):
     """
     ibook_processor = IBookNoteProcessor(data=src)
 
-    words = ibook_processor.lemmatize().get_words(cleaned=True)
+    words = ibook_processor.lemmatize().normalize().get_words(cleaned=True)
     vocabulary = fetch_vocabulary(words, voc_name)
     ibook_processor.merge_explanation_from_vocabulary(vocabulary)
 

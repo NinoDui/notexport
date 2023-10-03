@@ -6,7 +6,7 @@ import pandas as pd
 
 from notexport import attach_word_explaination, fetch_notes
 from notexport.anki import pack
-from notexport.common import CONST_COMM
+from notexport.common import CONST_COMM, CONST_IBOOK
 
 
 def generate_target_folder(ctx, param, value):
@@ -53,6 +53,9 @@ def _main(title, output, after, before, join_vocabulary, vocabulary, gen_anki):
         df_w, df_s = attach_word_explaination(target_notes, vocabulary)
         df_w.to_csv(os.path.join(output, "words.csv"), index=False)
         df_s.to_csv(os.path.join(output, "sentences.csv"), index=False)
+        df_w[CONST_IBOOK.NOTE_WORD_COL].to_csv(
+            os.path.join(output, "clean_word.txt"), index=False, header=False
+        )
 
         print(
             f"Dumped {df_w.shape[0]} words and {df_s.shape[0]} sentences under folder {output}"

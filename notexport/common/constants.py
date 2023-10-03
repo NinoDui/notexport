@@ -24,6 +24,7 @@ class CONST_IBOOK(object):
     BOOK_ID_COL_IN_ANNOTATION = "ZANNOTATIONASSETID"
     NOTE_COL = "HighlightedText"
     NOTE_COMPLETE_COL = "BroaderText"
+    NOTE_WORD_COL = "CleanedWord"
 
 
 class CONST_VACABULARY(StrEnum):
