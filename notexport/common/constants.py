@@ -1,6 +1,6 @@
 import getpass
 from datetime import datetime
-from enum import StrEnum
+from enum import IntEnum, StrEnum
 from zoneinfo import ZoneInfo
 
 
@@ -25,6 +25,14 @@ class CONST_IBOOK(object):
     NOTE_COL = "HighlightedText"
     NOTE_COMPLETE_COL = "BroaderText"
     NOTE_WORD_COL = "CleanedWord"
+
+    class NOTE_TYPE(IntEnum):
+        YELLOW = 0
+        GREEN = 1
+        BLUE = 2
+        PINK = 3
+        PURPLE = 4
+        UNDERLINE = 5
 
 
 class CONST_VACABULARY(StrEnum):
