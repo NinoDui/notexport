@@ -43,6 +43,12 @@ python notexport/anki/transform.py \
 - [x] Query local vocabulary mdx/sqlite database for word meaning.
 - [x] Create Anki Cards with contents in HTML format
 
+## TODO
+- [ ] SQL Template via `ninja`
+- [ ] Docker Image and portable usage support
+- [ ] Lemmatization with better tokenize/pos_tag/lemmatize methods
+- [ ] Splitazation of words/sentences.
+
 ## Acknowledge
 1. [angela-zhao](https://github.com/angela-zhao) and her project [apple-books-annotations-exporter](https://github.com/angela-zhao/apple-books-annotations-exporter/tree/master)
 2. [mmjang](https://github.com/mmjang) and his project [mdict-query](https://github.com/mmjang/mdict-query)
