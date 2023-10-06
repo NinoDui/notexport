@@ -1,9 +1,10 @@
 # Notexport (note + export)
 
-Python tool for 
+Python tool to
 1. Export highlights and Notes from Apple Books to local CSV/Excel files
 2. Fetch the word meaning
-3. Create Anki Cards.
+3. Create Anki Cards
+4. Export reading notes to Notion (under development)
 
 ## Usage
 
@@ -44,6 +45,7 @@ python notexport/anki/transform.py \
 - [x] Create Anki Cards with contents in HTML format
 
 ## TODO
+- [ ] Notion Export
 - [ ] SQL Template via `ninja`
 - [ ] Docker Image and portable usage support
 - [ ] Lemmatization with better tokenize/pos_tag/lemmatize methods
